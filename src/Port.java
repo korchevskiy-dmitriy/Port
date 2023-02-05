@@ -9,7 +9,7 @@ public class Port {
     private final int INDEX_GATE_EN = 1;
     private final int INDEX_GATE_TO = 1;
 
-    List<Container> containers = new ArrayList<>();
+    private List<Container> containers = new ArrayList<>();
 
     Scanner in = new Scanner(System.in);
 
@@ -75,7 +75,7 @@ public class Port {
                 System.out.println("Your ship has successfully entered the port");
                 System.out.println("Your ship number is: "+ ship.getShipNumber() + ". Gate number: " + ship.getNumberGate());
             } else if (gate > 2 || gate < 0) {
-                System.out.println("Gate number: " + gate + "does`t exist, switch the gate number to right");
+                System.out.println("Gate number: " + gate + " does`t exist, switch the gate number to right");
             } else {
                 System.out.println("This gate is occupied");
             }
@@ -93,13 +93,11 @@ public class Port {
                 ship.setShipInPort(false);
                 ship.setNumberGate(0);
                 statusGateEn = false;
-                System.out.println("Your ship can`t get in gate, gate is occupied");
                 System.out.println("Your ship number is: "+ ship.getShipNumber() + ". Exit from port. Gate number: " + ship.getNumberGate());
             } else if (gate == 2 && statusGateTo) {
                 ship.setShipInPort(false);
                 ship.setNumberGate(0);
                 statusGateTo = false;
-                System.out.println("Your ship can`t get in gate, gate is occupied");
                 System.out.println("Your ship number is: "+ ship.getShipNumber() + ". Exit from port. Gate number: " + ship.getNumberGate());
             } else if (gate > 2 || gate < 0) {
                 System.out.println("Gate number: " + gate + "does`t exist, switch the gate number to right");
@@ -111,9 +109,49 @@ public class Port {
         }
     }
 
+    protected void addContainerToShip(Ship ship){
+        System.out.println("Enter quantity containers: ");
+        int quantity = in.nextInt();
+
+        if (ship.getShipInPort()) {
+            if (quantity >= 0 && quantity + ship.getContainers().size() <= 10){
+                for (int i = 0; i < quantity; i++){
+                    ship.setContainersInBoat(containers.get(0));
+                }
+            } else {
+                System.out.println("Incorrectly entered number of containers: " + quantity + ". You should enter 1 - 10 containers");
+            }
+        } else {
+            System.out.println("Your ship out of port");
+        }
+    }
+
+    public void removeContainerFromShip(Ship ship) {
+        System.out.println("Enter quantity containers: ");
+        int quantity = in.nextInt();
+
+        if (ship.getShipInPort()) {
+            if (quantity >= 10 && ship.getContainers().size() > 0 && ship.getContainers().size() >= quantity){
+                for (int i = 0; i < quantity; i++){
+                    containers.add(ship.getContainersFromShip());
+                }
+            } else {
+                System.out.println("Incorrectly entered number of containers: " + quantity + ". You should enter 1 - " + quantity + " containers");
+            }
+        } else {
+            System.out.println("Your ship out of port");
+        }
+    }
+
+    protected void gateStatus(){
+        System.out.println("First gate: " + statusGateEn + ". Second gate: " + statusGateTo);
+    }
+
     protected void addContainer(){
         for (int i = 0; i < 50; i++) {
             containers.add(new Container(1000, "Mobila epta ayfon4ik 14 pro max", i));
         }
     }
+
+
 }

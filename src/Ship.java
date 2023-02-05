@@ -5,16 +5,13 @@ public class Ship {
 
     private int shipNumber;
     private boolean shipInPort = false;
-
-
     private int numberGate;
     private List<Container> containers = new ArrayList<>();
 
-    public Ship(int shipNumber, boolean shipInPort, int numberGate, List<Container> containers) {
+
+    public Ship(int shipNumber) {
         this.shipNumber = shipNumber;
-        this.shipInPort = shipInPort;
-        this.numberGate = numberGate;
-        this.containers = containers;
+
     }
 
     public int getShipNumber() {
@@ -51,5 +48,24 @@ public class Ship {
 
     public void setContainers(List<Container> containers) {
         this.containers = containers;
+    }
+
+    protected Container getContainersFromShip(){
+        containers.get(0);
+        containers.remove(0);
+        return null;
+    }
+
+    protected void setContainersInBoat(Container container){
+        containers.add(container);
+    }
+    @Override
+    public String toString() {
+        return "Ship{" +
+                "shipNumber=" + shipNumber +
+                ", shipInPort=" + shipInPort +
+                ", numberGate=" + numberGate +
+                ", containers=" + containers +
+                '}';
     }
 }
